@@ -1,0 +1,28 @@
+body {
+	width: 100vw;
+	height: 100vh;
+	margin: 0px;
+	padding: 0px;
+	background-color: #29292b;
+	font-family: "Roboto", sans-serif;
+}
+
+header {
+	text-align: center;
+	position: fixed;
+	background-color: #32a852;
+	color: #ffffff;
+    font-weight: bold;
+	padding: 10px;
+	width: 100%;
+}
+footer {
+	text-align: center;
+	position: fixed;
+	background-color: #32a852;
+	color: #ffffff;
+    font-weight: bold; 
+	padding: 10px;
+	width: 100%;
+	bottom: 0px;
+}

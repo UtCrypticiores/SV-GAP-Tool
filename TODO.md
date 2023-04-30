@@ -1,7 +1,7 @@
 ### Phase1: (8 May)  
     - [ ] Core functionality  
         - [x] Ingest data
-        - [ ] Format data   
+        - [x] Format data   
         - [ ] Incorporate antenna outages  
         - [ ] Report visibility gaps for each SV  
     - [ ] User interface design  
