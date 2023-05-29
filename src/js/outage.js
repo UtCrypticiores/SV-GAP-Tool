@@ -1,26 +1,37 @@
+var data;
+
 window.onload = (event) => {
-	console.log("page is fully loaded");
-	outage()
-  };
+	data = window.localStorage.getItem("data");
+	if (data.length == 0) {
+		noFiles();
+		return;
+	}
+	data = JSON.parse(data);
 
-function outage(sites, PRN) {
-let data = window.localStorage.getItem("data")
-console.log(data)
+	console.log(data);
 
-	let allowedSites = [];
-	let allowedPRNs = [];
+	loadSelection();
+	outage();
+};
 
-	for (let file = 0; file < data.length; file++) {
-		for (let i = 0; i < sites.length; i++) {
-			if (data[file].Site == sties[i]) {
-				allowedSites.push(file);
-			}
-		}
-		for (let i = 0; i < data[file].Data.length; i++) {
-			for (let index = 0; index < PRN.length; index++) {
-				if (data[file].Data[i] == PRN[index]) {
-				}
-			}
+function loadSelection() {
+	let sites = [];
+	let PRN = [];
+
+	for (let i = 0; i < data.length; i++) {
+		sites.push(data[i].Site);
+		for (let index = 0; index < data[i].Data.length; index++) {
+			PRN.push(data[i].Data[index].PRN);
 		}
 	}
+	PRN = [...new Set(PRN)];
+	sites = [...new Set(sites)];
+
+	console.log(sites, PRN);
+}
+
+function outage() {}
+
+function noFiles() {
+	console.log("No files found");
 }

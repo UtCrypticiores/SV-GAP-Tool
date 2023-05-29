@@ -31,7 +31,9 @@ fileInput.addEventListener("change", () => {
 function fileReader(file) {
 	const reader = new FileReader();
 
-	let data = [];
+	let data = window.localStorage.getItem("data");
+	data = JSON.parse(data);
+	console.log(data)
 
 	reader.onload = (event) => {
 		let array;
@@ -47,12 +49,16 @@ function fileReader(file) {
 		array[0][2] = array[0][2].replace(/,/g, "");
 		array[0][2] = array[0][2].concat("Z");
 		for (let i = 1; i < array.length; i++) {
-			array[i] = array[i].split(",");
-			array[i] = {
-				PRN: array[i][0],
-				visibilityBegin: array[i][1],
-				visibilityEnd: array[i][2],
-			};
+			if (array[i] == "" || array[i] == undefined) {
+				array.splice(i, 1);
+			} else {
+				array[i] = array[i].split(",");
+				array[i] = {
+					PRN: array[i][0],
+					visibilityBegin: array[i][1],
+					visibilityEnd: array[i][2],
+				};
+			}
 		}
 		object = {
 			Site: array[0][0],
@@ -62,6 +68,7 @@ function fileReader(file) {
 		array.splice(0, 1);
 		object.Data = array;
 		data.push(object);
+		data = JSON.stringify(data);
 
 		window.localStorage.setItem("data", data);
 	};
