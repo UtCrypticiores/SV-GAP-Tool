@@ -1,5 +1,5 @@
-body  {
-	width: 100vw;
+body {
+	width: 100%;
 	height: 100vh;
 	margin: 0px;
 	padding: 0px;
@@ -7,22 +7,40 @@ body  {
 	font-family: "Roboto", sans-serif;
 }
 
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #555;
+}
+
 header {
 	text-align: center;
-	position: fixed;
+	position: sticky;
 	background-color: #32a852;
 	color: #ffffff;
-    font-weight: bold;
+	font-weight: bold;
 	padding: 10px;
-	width: 100%;
+	top: 0px;
+	min-width: 150px;
 }
 footer {
 	text-align: center;
 	position: fixed;
 	background-color: #32a852;
 	color: #ffffff;
-    font-weight: bold; 
+	font-weight: bold;
 	padding: 10px;
-	width: 100%;
 	bottom: 0px;
+	width: 100%;
+	min-width: 150px;
 }

@@ -31,14 +31,12 @@ fileInput.addEventListener("change", () => {
 function fileReader(file) {
 	const reader = new FileReader();
 
-	let data = window.localStorage.getItem("data");
-	data = JSON.parse(data);
-	console.log(data)
-
 	reader.onload = (event) => {
+		let data = window.localStorage.getItem("data");
 		let array;
 		let object;
 
+		data = JSON.parse(data);
 		array = event.target.result.replace(/\r/g, "").split("\n");
 		array.splice(0, 1);
 		array.splice(1, 1);
@@ -68,6 +66,7 @@ function fileReader(file) {
 		array.splice(0, 1);
 		object.Data = array;
 		data.push(object);
+		console.log(data)
 		data = JSON.stringify(data);
 
 		window.localStorage.setItem("data", data);
