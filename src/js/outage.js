@@ -151,6 +151,9 @@ function dataFormatting() {
 					siteTimes[index].times[startOfVis].stop =
 						siteTimes[index].times[startOfVis + 1].stop;
 					siteTimes[index].times.splice(startOfVis + 1, 1);
+					i--;
+				} else {
+					startOfVis = i;
 				}
 			}
 		}
@@ -185,6 +188,24 @@ function dataFormatting() {
 						stop: siteTimes[index].times[i + 1].start,
 					});
 			}
+			if (
+				dateTimeToInt(
+					siteTimes[index].times[siteTimes[index].times.length - 1]
+						.stop
+				)
+					.toString()
+					.slice(-4) != "2359"
+			) {
+				visGaps[index].times.push({
+					start: siteTimes[index].times[
+						siteTimes[index].times.length - 1
+					].stop,
+					stop:
+						siteTimes[index].times[
+							siteTimes[index].times.length - 1
+						].stop.split(" ")[0] + " 23:59",
+				});
+			}
 		}
 	}
 	if (document.getElementById("visGaps").checked) {
@@ -196,9 +217,10 @@ function dataFormatting() {
 
 function toggleDisplay(id) {
 	if (document.getElementById(id).style.display == "none") {
-		document.getElementById(id).style.display = "block"
-	}else{
-	document.getElementById(id).style.display = "none";}
+		document.getElementById(id).style.display = "block";
+	} else {
+		document.getElementById(id).style.display = "none";
+	}
 }
 
 function dateTimeToInt(dateTime) {
