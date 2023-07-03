@@ -39,7 +39,7 @@ function outage(sites, PRN) {
 			siteBoxes +
 			`
 			<label for= "site${sites[i]}Checkbox"> <br>
-			  <input type="checkbox" id="site${sites[i]}Checkbox" checked/>${sites[i]}</label> 
+			  <input type="checkbox" id="site${sites[i]}Checkbox" onchange="dataDisplay();" checked/>${sites[i]}</label> 
 			`;
 	}
 	for (let i = 0; i < PRN.length; i++) {
@@ -77,33 +77,46 @@ function dataDisplay() {
 }
 
 function dataFormatting() {
+	let refinedData = [];
 	let siteTimes = [];
 	let visGaps = [];
 	let test = false;
 	let min;
 	let startOfVis;
 
-	//put all start and stop times for a PRN together
+	//remove all unselected sites
 	for (let i = 0; i < data.length; i++) {
 		if (document.getElementById(`site${data[i].Site}Checkbox`).checked) {
-			for (let index = 0; index < data[i].Data.length; index++) {
+			refinedData.push(data[i]);
+		}
+	}
+
+	console.log(refinedData);
+	//put all start and stop times for a PRN together
+	for (let i = 0; i < refinedData.length; i++) {
+		if (
+			document.getElementById(`site${refinedData[i].Site}Checkbox`)
+				.checked
+		) {
+			for (let index = 0; index < refinedData[i].Data.length; index++) {
 				test = false;
 				for (let ii = 0; ii < siteTimes.length; ii++) {
-					if (siteTimes[ii].PRN == data[i].Data[index].PRN) {
+					if (siteTimes[ii].PRN == refinedData[i].Data[index].PRN) {
 						siteTimes[ii].times.push({
-							start: data[i].Data[index].visibilityBegin,
-							stop: data[i].Data[index].visibilityEnd,
+							start: refinedData[i].Data[index].visibilityBegin,
+							stop: refinedData[i].Data[index].visibilityEnd,
 						});
 						test = true;
 					}
 				}
 				if (!test) {
 					siteTimes.push({
-						PRN: data[i].Data[index].PRN,
+						PRN: refinedData[i].Data[index].PRN,
 						times: [
 							{
-								start: data[i].Data[index].visibilityBegin,
-								stop: data[i].Data[index].visibilityEnd,
+								start: refinedData[i].Data[index]
+									.visibilityBegin,
+								stop: refinedData[i].Data[index].visibilityEnd,
 							},
 						],
 					});
