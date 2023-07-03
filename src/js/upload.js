@@ -51,6 +51,25 @@ function fileReader(file) {
 				array.splice(i, 1);
 			} else {
 				array[i] = array[i].split(",");
+				for (let index = 1; index <= 2; index++) {
+					array[i][index] = array[i][index].split(" ");
+					if (array[i][index][1].length == 4) {
+						array[i][index][1] = "0" + array[i][index][1];
+					}
+					array[i][index] =
+						array[i][index][0] + " " + array[i][index][1];
+					array[i][index] = array[i][index].split("/");
+					if (array[i][index][0].length == 1) {
+						array[i][index][0] = "0" + array[i][index][0];
+					}
+					array[i][index] =
+						array[i][index][0] +
+						"/" +
+						array[i][index][1] +
+						"/" +
+						array[i][index][2];
+				}
+
 				array[i] = {
 					PRN: array[i][0],
 					visibilityBegin: array[i][1],
@@ -66,7 +85,7 @@ function fileReader(file) {
 		array.splice(0, 1);
 		object.Data = array;
 		data.push(object);
-		console.log(data)
+		console.log(data);
 		data = JSON.stringify(data);
 
 		window.localStorage.setItem("data", data);

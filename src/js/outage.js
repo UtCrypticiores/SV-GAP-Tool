@@ -10,7 +10,6 @@ window.onload = (event) => {
 
 	loadSelection();
 	dataDisplay();
-	console.log(data);
 };
 
 function loadSelection() {
@@ -39,16 +38,16 @@ function outage(sites, PRN) {
 		siteBoxes =
 			siteBoxes +
 			`
-			<label for= "${sites[i]}"> <br>
-			  <input type="checkbox" id="${sites[i]}" checked/>${sites[i]}</label> 
+			<label for= "site${sites[i]}Checkbox"> <br>
+			  <input type="checkbox" id="site${sites[i]}Checkbox" checked/>${sites[i]}</label> 
 			`;
 	}
 	for (let i = 0; i < PRN.length; i++) {
 		PRNBoxes =
 			PRNBoxes +
 			`
-			<label for= "${PRN[i]}"> <br>
-			  <input type="checkbox" id="${PRN[i]}" checked/>${PRN[i]}</label>  
+			<label for= "PRN${PRN[i]}Checkbox"> <br>
+			  <input type="checkbox" id="PRN${PRN[i]}Checkbox" onchange="toggleDisplay('PRN${PRN[i]}Vis')" checked />${PRN[i]}</label>  
 			`;
 	}
 
@@ -60,11 +59,33 @@ function outage(sites, PRN) {
 }
 
 function dataDisplay() {
-	let siteTimes = [];
-	let test = false;
+	let vis = dataFormatting();
+	document.getElementById("dataWrapper").innerHTML = "";
 
+	for (let i = 0; i < vis.length; i++) {
+		let PRNVis = document.createElement("div");
+		let text = `<br>SV ${vis[i].PRN}`;
+		for (let index = 0; index < vis[i].times.length; index++) {
+			text =
+				text +
+				`<br> Start: ${vis[i].times[index].start} Stop: ${vis[i].times[index].stop}`;
+		}
+		PRNVis.id = `PRN${vis[i].PRN}Vis`;
+		PRNVis.innerHTML = text;
+		document.getElementById("dataWrapper").appendChild(PRNVis);
+	}
+}
+
+function dataFormatting() {
+	let siteTimes = [];
+	let visGaps = [];
+	let test = false;
+	let min;
+	let startOfVis;
+
+	//put all start and stop times for a PRN together
 	for (let i = 0; i < data.length; i++) {
-		if (document.getElementById(data[i].Site).checked) {
+		if (document.getElementById(`site${data[i].Site}Checkbox`).checked) {
 			for (let index = 0; index < data[i].Data.length; index++) {
 				test = false;
 				for (let ii = 0; ii < siteTimes.length; ii++) {
@@ -90,7 +111,94 @@ function dataDisplay() {
 			}
 		}
 	}
-	console.log(siteTimes);
+	//sorting
+	for (let index = 0; index < siteTimes.length; index++) {
+		startOfVis = 0;
+		//start passes
+		for (let i = 0; i < siteTimes[index].times.length; i++) {
+			//index of smallest element
+			min = i;
+			//check for lesser element
+			for (let j = i + 1; j < siteTimes[index].times.length; j++) {
+				if (
+					dateTimeToInt(siteTimes[index].times[j].start) <
+					dateTimeToInt(siteTimes[index].times[min].start)
+				) {
+					min = j;
+				}
+			}
+			//compare indexes
+			if (min !== i) {
+				//swap
+				[siteTimes[index].times[i], siteTimes[index].times[min]] = [
+					siteTimes[index].times[min],
+					siteTimes[index].times[i],
+				];
+			}
+		}
+		//merge vis times together
+		for (let i = 0; i < siteTimes[index].times.length; i++) {
+			if (i != siteTimes[index].times.length - 1) {
+				if (
+					dateTimeToInt(siteTimes[index].times[startOfVis].start) <=
+						dateTimeToInt(
+							siteTimes[index].times[startOfVis + 1].start
+						) &&
+					dateTimeToInt(
+						siteTimes[index].times[startOfVis + 1].start
+					) <= dateTimeToInt(siteTimes[index].times[startOfVis].stop)
+				) {
+					siteTimes[index].times[startOfVis].stop =
+						siteTimes[index].times[startOfVis + 1].stop;
+					siteTimes[index].times.splice(startOfVis + 1, 1);
+				}
+			}
+		}
+		//invert vis times to get vis gaps
+		if (document.getElementById("visGaps").checked) {
+			if (
+				dateTimeToInt(siteTimes[index].times[0].start)
+					.toString()
+					.slice(-4) != "0000"
+			) {
+				visGaps.push({
+					PRN: siteTimes[index].PRN,
+					times: [
+						{
+							start:
+								siteTimes[index].times[0].start.split(" ")[0] +
+								" 00:00",
+							stop: siteTimes[index].times[0].start,
+						},
+					],
+				});
+			} else {
+				visGaps.push({
+					PRN: siteTimes[index].PRN,
+					times: [],
+				});
+			}
+			for (let i = 0; i < siteTimes[index].times.length; i++) {
+				if (i + 1 < siteTimes[index].times.length)
+					visGaps[index].times.push({
+						start: siteTimes[index].times[i].stop,
+						stop: siteTimes[index].times[i + 1].start,
+					});
+			}
+		}
+	}
+	if (document.getElementById("visGaps").checked) {
+		return visGaps;
+	} else {
+		return siteTimes;
+	}
+}
+
+function toggleDisplay(id) {
+	if (document.getElementById(id).style.display == "none") {
+		document.getElementById(id).style.display = "block"
+	}else{
+	document.getElementById(id).style.display = "none";}
 }
 
 function dateTimeToInt(dateTime) {

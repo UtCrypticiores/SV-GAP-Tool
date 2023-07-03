@@ -1,12 +1,12 @@
 ### Phase1: (8 May)  
-    - [ ] Core functionality  
+    - [x] Core functionality  
         - [x] Ingest data
         - [x] Format data   
-        - [ ] Incorporate antenna outages  
-        - [ ] Report visibility gaps for each SV  
+        - [x] Incorporate antenna outages  
+        - [X] Report visibility gaps for each SV  
     - [ ] User interface design  
             - [x] Drag/drop data files or upload from file manager  
-            - [ ] Input antenna outages  
+            - [x] Input antenna outages  
             - [ ] Sort data by site, SVN, IRON, PRN, or block  
   
 ### Phase2: (TBD)  
