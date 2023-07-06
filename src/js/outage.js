@@ -52,7 +52,10 @@ function outage(sites, PRN) {
 	}
 
 	siteDropdown.innerHTML = siteBoxes;
+	siteDropdown.id = "siteForm";
+
 	PRNDropdown.innerHTML = PRNBoxes;
+	PRNDropdown.id = "PRNForm";
 
 	document.getElementById("sites").appendChild(siteDropdown);
 	document.getElementById("PRN").appendChild(PRNDropdown);
@@ -91,7 +94,6 @@ function dataFormatting() {
 		}
 	}
 
-	console.log(refinedData);
 	//put all start and stop times for a PRN together
 	for (let i = 0; i < refinedData.length; i++) {
 		if (

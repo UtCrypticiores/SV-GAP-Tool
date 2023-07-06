@@ -18,7 +18,7 @@ function dropHandler(event) {
 }
 
 function dragOverHandler(event) {
-	console.log("File(s) in drop zone");
+	// console.log("File(s) in drop zone");
 	event.preventDefault();
 }
 
@@ -85,7 +85,7 @@ function fileReader(file) {
 		array.splice(0, 1);
 		object.Data = array;
 		data.push(object);
-		console.log(data);
+		// console.log(data);
 		data = JSON.stringify(data);
 
 		window.localStorage.setItem("data", data);

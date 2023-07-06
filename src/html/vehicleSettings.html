@@ -12,39 +12,28 @@
 		/>
 		<link rel="stylesheet" href="../css/main.css" />
 		<link rel="stylesheet" href="../css/nav.css" />
-		<link rel="stylesheet" href="../css/outage.css" />
 		<title>Document</title>
 	</head>
 	<body>
 		<header>UNCLASSIFIED</header>
 		<nav>
 			<ul>
-				<li><a class="active" href="outage.html">Outage</a></li>
+				<li><a href="outage.html">Outage</a></li>
 				<li><a href="timeline.html">Timeline</a></li>
 				<li><a href="map.html">Map</a></li>
-				<li><a href="vehicleSettings.html">Vehicle Settings</a></li>
+				<li>
+					<a class="active" href="vehicleSettings.html"
+						>Vehicle Settings</a
+					>
+				</li>
 				<li style="float: right">
 					<a href="upload.html">Upload</a>
 				</li>
 			</ul>
 		</nav>
-		<div class="wrapper">
-			<div id="options">
-				<form id="optionForm">
-					Options
-					<label for="visGaps"
-						><br />
-						<input type="checkbox" id="visGaps" onchange="dataDisplay()" checked />
-						Visibility Gaps</label
-					>
-				</form>
-			</div>
-			<div id="sites"></div>
-			<div id="PRN"></div>
-			<div id="dataWrapper"></div>
-		</div>
+
 		<footer>UNCLASSIFIED</footer>
 	</body>
 	<script src="../js/main.js"></script>
-	<script src="../js/outage.js"></script>
+    <script src="../js/vehicleSettings.js"></script>
 </html>

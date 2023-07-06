@@ -1,3 +1,18 @@
+#options {
+	margin: 10px;
+	width: fit-content;
+}
+
+#sites {
+	margin: 10px;
+	width: fit-content;
+}
+
+#PRN {
+	margin: 10px;
+	width: fit-content;
+}
+
 .wrapper {
 	padding-bottom: 39.2px;
 }
