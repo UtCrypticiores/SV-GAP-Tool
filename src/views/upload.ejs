@@ -1,40 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
-			rel="stylesheet"
-		/>
-		<link rel="stylesheet" href="../css/main.css" />
-		<link rel="stylesheet" href="../css/nav.css" />
-		<link rel="stylesheet" href="../css/upload.css" />
-		<title>Document</title>
-	</head>
-	<body>
-		<header>UNCLASSIFIED</header>
-		<%- include('partials/nav') -%>
-		<div
-			id="uploadBox"
-			ondrop="dropHandler(event);"
-			ondragover="dragOverHandler(event);"
-		>
-			<div class="text">
-				<p>Drag one or more files to this <i>drop zone</i>.</p>
+<%- include('partials/header') -%> <%- include('partials/nav') -%>
 
-				<input id="files" multiple type="file" /><br /><br />
-				<button onclick="clearBuffer();">Clear</button>
-			</div>
-		</div>
-		<footer>UNCLASSIFIED</footer>
-	</body>
-	<script src="../js/main.js"></script>
-	<script src="../js/upload.js"></script>
-	<script>
-		document.getElementById("upload").classList.add("active");
-	</script>
-</html>
+<div
+	id="uploadBox"
+	ondrop="dropHandler(event);"
+	ondragover="dragOverHandler(event);"
+>
+	<div class="text">
+		<p>Drag one or more files to this <i>drop zone</i>.</p>
+
+		<input id="files" multiple type="file" /><br /><br />
+		<button onclick="clearBuffer();">Clear</button>
+	</div>
+</div>
+<script src="../js/main.js"></script>
+<script src="../js/upload.js"></script>
+<script>
+	document.getElementById("upload").classList.add("active");
+</script>
+
+<%- include('partials/footer') -%>
